@@ -1,0 +1,115 @@
+/* Motion layer for cg-arctic — attention + trust animations. Everything here is decorative: with
+   prefers-reduced-motion (or no JS) the page is fully visible and static. */
+
+/* ── scroll progress ─────────────────────────────────────────────── */
+.scroll-progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:2147482000;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--blue),#fff 55%,var(--blue));box-shadow:0 0 12px var(--blue);pointer-events:none}
+
+/* ── hero ────────────────────────────────────────────────────────── */
+.live-chip{display:inline-flex;align-items:center;gap:9px;margin:2px 0 18px;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.3px;color:#fff;background:#ffffff1c;border:1px solid #ffffff3d;backdrop-filter:blur(10px)}
+.live-chip i{position:relative;width:8px;height:8px;border-radius:50%;background:#35e08a;flex:none}
+.live-chip i::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid #35e08a;opacity:.7;animation:chip-ping 1.8s ease-out infinite}
+.live-chip.plain{padding-left:14px}
+@keyframes chip-ping{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.motion-js .hero-copy h1{animation:none}
+.motion-js .hero h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.motion-js .hero h1 .wi{display:inline-block;will-change:transform}
+.hero .rating .stars .st,.reviews .stars.big .st{display:inline-block}
+.photo-note{animation:note-float 6s ease-in-out 1.8s infinite}
+@keyframes note-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+/* ── shimmer buttons (21st.dev "Shimmer Button", ported: light travelling the perimeter) ── */
+.shim{position:relative;isolation:isolate;overflow:hidden;--shim-bg:var(--navy);--shim-c:#cfeefb}
+.shim.light,.hero .actions .btn:not(.outline){--shim-bg:var(--blue);--shim-c:#fff}
+.shim:hover{--shim-bg:#fff}
+.shim.navy-hover:hover{--shim-bg:color-mix(in srgb,var(--navy) 80%,#fff)}
+.shim::before{content:"";position:absolute;left:50%;top:50%;width:240%;aspect-ratio:1;translate:-50% -50%;z-index:-2;background:conic-gradient(from 0deg,transparent 0 62%,var(--shim-c) 82%,transparent 100%);animation:shim-spin 3.4s linear infinite}
+.shim::after{content:"";position:absolute;inset:2px;border-radius:inherit;background:var(--shim-bg);z-index:-1;transition:background .25s}
+@keyframes shim-spin{to{transform:rotate(360deg)}}
+.motion-js .btn{transition:background .25s,box-shadow .35s,color .25s}
+
+/* ── reviews: score panel + two-row marquee (21st.dev "Testimonials Marquee", ported) ── */
+.reviews .score{display:flex;align-items:center;gap:20px}
+.reviews .score-num{font:600 76px/0.9 Manrope,sans-serif;letter-spacing:-4px;color:var(--navy)}
+.reviews .stars.big{font-size:22px;letter-spacing:3px}
+.reviews .score p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.reviews .score-link{display:inline-block;margin-top:6px;font-size:13px;font-weight:700;color:var(--navy);text-decoration:underline;text-underline-offset:4px}
+.marquee{margin-top:40px;display:grid;gap:18px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.mq-row{overflow:hidden}
+.mq-track{display:flex;width:max-content;animation:mq-slide var(--dur,40s) linear infinite}
+.mq-row.rev .mq-track{animation-direction:reverse}
+.mq-row:hover .mq-track,.mq-row:focus-within .mq-track{animation-play-state:paused}
+.mq-track .review{flex:0 0 380px;margin-right:18px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .4s var(--ease-out),box-shadow .4s}
+.mq-track .review:hover{transform:translateY(-4px);box-shadow:0 14px 34px #0b26381f}
+.mq-track .review blockquote{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden;margin:14px 0 18px}
+@keyframes mq-slide{to{transform:translateX(-50%)}}
+
+/* ── services: tilt + icon + arrow ───────────────────────────────── */
+.services{perspective:1100px}
+.service{transform-style:preserve-3d;will-change:transform;transition:box-shadow .4s,border-color .4s,background .4s}
+.service:hover{box-shadow:0 22px 50px #0b263820;border-color:#9fcfe4}
+.service .service-icon{display:inline-block;transition:transform .6s var(--ease-out)}
+.service:hover .service-icon{transform:rotate(-12deg) scale(1.25)}
+.service button{position:relative;transition:letter-spacing .3s,color .3s}
+.service button::after{content:" →";display:inline-block;opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s}
+.service:hover button::after{opacity:1;transform:translateX(0)}
+
+/* ── stats ───────────────────────────────────────────────────────── */
+.stat{transition:background .35s,transform .35s}
+.stat:hover{background:#dff0f7;transform:translateY(-2px)}
+
+/* ── gallery + lightbox ──────────────────────────────────────────── */
+.work-grid figure{cursor:zoom-in;position:relative}
+.work-grid figure::after{content:"⤢";position:absolute;right:12px;bottom:12px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#ffffffe6;color:var(--navy);font-size:16px;opacity:0;transform:scale(.7);transition:opacity .3s,transform .3s}
+.work-grid figure:hover::after{opacity:1;transform:scale(1)}
+.lb{position:fixed;inset:0;z-index:2147483100;display:grid;place-items:center;background:#06141ecc;backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s}
+.lb.open{opacity:1;pointer-events:auto}
+.lb img{max-width:min(92vw,720px);max-height:88vh;border-radius:12px;box-shadow:0 30px 80px #000a;transform:scale(.94);transition:transform .35s var(--ease-out)}
+.lb.open img{transform:scale(1)}
+.lb button{position:absolute;border:0;background:#ffffff26;color:#fff;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;transition:background .2s}
+.lb button:hover{background:#ffffff4d}
+.lb .x{top:22px;right:22px}.lb .p{left:22px;top:50%}.lb .n{right:22px;top:50%}
+
+/* ── quote form (feedback): focus glow + success state ───────────── */
+.quote form input,.quote form select,.quote form textarea{transition:border-color .25s,box-shadow .25s,background .25s}
+.quote form input:focus,.quote form select:focus,.quote form textarea:focus{outline:none;border-color:#2b8db4;box-shadow:0 0 0 4px #bde9fa88;background:#fff}
+#form-result{margin-top:14px;padding:14px 16px;border-radius:9px;font-size:14px;background:#edf5f9;color:var(--navy);animation:result-in .5s var(--ease-out) both}
+#form-result.ok{background:#e3f7ec;color:#0f5a36}
+#form-result.ok::before{content:"✓";display:inline-grid;place-items:center;width:22px;height:22px;margin-right:10px;border-radius:50%;background:#1a9d5f;color:#fff;font-size:13px;animation:tick-pop .5s var(--ease-out) both}
+@keyframes result-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes tick-pop{0%{transform:scale(0) rotate(-40deg)}100%{transform:scale(1) rotate(0)}}
+
+@media(max-width:740px){.reviews .score{margin-top:18px}.reviews .score-num{font-size:60px}.mq-track .review{flex-basis:300px}.lb .p,.lb .n{top:auto;bottom:22px}}
+
+/* ── review links ── */
+.reviews .score-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px}
+.reviews .score-links .score-link{margin-top:0}
+.reviews .score-link.leave{padding:6px 12px;border-radius:999px;background:var(--navy);color:#fff;text-decoration:none;transition:transform .25s,background .25s}
+.reviews .score-link.leave:hover{transform:translateY(-2px);background:color-mix(in srgb,var(--navy) 80%,#fff)}
+
+/* ── mobile sticky call bar (leaves room on the right for the chat launcher) ── */
+.callbar{display:none}
+@media(max-width:740px){
+  .callbar{display:flex;gap:8px;position:fixed;left:12px;right:84px;bottom:14px;z-index:2147482500;padding:8px;border-radius:14px;background:#0b2638f2;backdrop-filter:blur(12px);box-shadow:0 12px 34px #0b263866;transform:translateY(0);transition:transform .35s var(--ease-out),opacity .3s}
+  .callbar.hide{transform:translateY(130%);opacity:0;pointer-events:none}
+  .callbar a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none}
+  .callbar-call{flex:1.5;background:var(--blue);color:var(--navy)}
+  .callbar-quote{flex:1;color:#fff;border:1px solid #ffffff55}
+  body{padding-bottom:84px}
+  .callbar a{white-space:nowrap}
+  /* long business names (common for real listings) must not spill out of the header on phones */
+  .site-header .logo{font-size:18px;letter-spacing:-.8px;line-height:1.1;gap:8px;min-width:0;max-width:calc(100% - 56px)}
+  .site-header .logo small{display:none}
+  .site-header .logo div{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .site-header .logo svg{flex:none;width:30px;height:30px}
+}
+
+/* ── reduced motion: static, fully visible ───────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  .scroll-progress{display:none}
+  .live-chip i::after,.photo-note,.shim::before{animation:none}
+  .shim::before{display:none}
+  .marquee{-webkit-mask-image:none;mask-image:none}
+  .mq-track{animation:none;flex-wrap:wrap;width:auto}
+  .mq-track .review[aria-hidden="true"]{display:none}
+  .mq-row{overflow:visible}
+}

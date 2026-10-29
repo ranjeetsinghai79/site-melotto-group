@@ -1,0 +1,45 @@
+import type { SiteConfig } from "@core/web/types"
+import { realDataCss, galleryBlock, reviewsBlock, callbarBlock } from "@core/web/blocks"
+import { esc, splitTagline, firstSentences, nicheLabel, stateOf } from "./util"
+
+const ARROW = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>`
+const CHEV = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`
+const DEFAULT_PROCESS = [
+  { title: "First, we listen.", desc: "Your priorities lead the conversation. Share your goals, ask every question, and take your time." },
+  { title: "A plan, not a pitch.", desc: "We talk through the options so you know what to expect before anything starts." },
+  { title: "Care beyond the moment.", desc: "Know your next steps, and reach us if anything comes up." },
+]
+
+const RD_THEME = { ink: "var(--foreground)", muted: "var(--muted-foreground)", line: "var(--border)", surface: "var(--card)", accent: "var(--primary)", bg: "var(--background)", btnBg: "var(--gold)", shim: "#ffffff" }
+
+export function render(c: SiteConfig): string {
+  const b = c.business
+  const areas = b.serviceAreas ?? []
+  const t = splitTagline(b.tagline)
+  const sub = firstSentences(c.about?.body, 2) || firstSentences(c.services?.[0]?.desc, 1)
+  const services = (c.services ?? []).slice(0, 5)
+  const badges = (c.trustBadges ?? []).slice(0, 3)
+  const steps = (c.process?.length ? c.process : DEFAULT_PROCESS).slice(0, 3)
+  const faq = c.faq ?? []
+  const options = c.formServiceOptions?.length ? c.formServiceOptions : (c.services ?? []).map(s => s.title)
+  const place = `${nicheLabel(b.niche).toUpperCase()} · ${b.city.toUpperCase()}${stateOf(c) ? ", " + stateOf(c).toUpperCase().slice(0, 2) : ""}`
+  const nameLc = esc(b.name.toLowerCase())
+  const brand = `<a class="brand" href="#" aria-label="${esc(b.name)} home">${b.logoUrl ? `<img src="${esc(b.logoUrl)}" alt="${esc(b.name)}" style="height:34px;width:auto">` : nameLc}<span>${esc(place)}</span></a>`
+  const about = c.about?.heading ? splitTagline(c.about.heading) : null
+  const strip = [...badges, areas.length ? `${areas[0]}${areas[1] ? " & " + areas[1] : ""}` : ""].filter(Boolean)
+
+  return `
+<a href="#main" class="skip">Skip to content</a>
+<header class="nav-shell">${brand}<nav aria-label="Main navigation"><a href="#treatments">Services</a><a href="#philosophy">Our approach</a><a href="#experience">The experience</a></nav><a class="button nav-cta" href="#consult">Get in touch ${ARROW}</a><button class="menu-button" aria-label="Open menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg></button></header>
+<main id="main"><section class="hero"><div class="hero-photo"><img src="/hero-1.jpg" alt="${esc(b.name)}" fetchpriority="high"/><div class="photo-wash"></div></div><div class="hero-inner"><div class="hero-copy"><p class="eyebrow"><span></span> ${esc(place)}</p><h1>${[t.a, t.b].filter(Boolean).map(esc).join("<br/>")}${t.a || t.b ? "<br/>" : ""}<em>${esc(t.em)}</em></h1>${sub ? `<p class="hero-sub">${esc(sub)}</p>` : ""}<div class="hero-actions"><a class="button" href="#consult">Get in touch ${ARROW}</a><a href="#treatments" class="text-link">Explore our services ${ARROW}</a></div>${badges[0] ? `<p class="hero-small">${esc(badges[0])}</p>` : ""}</div><div class="hero-side">${esc(b.name.toUpperCase())}</div><div class="hero-caption"><span class="caption-line"></span><span>${esc((areas[0] ?? b.city).toUpperCase())}${areas[1] ? "<br/>" + esc(areas[1].toUpperCase()) : ""}</span></div><a href="#treatments" class="scroll-cue">SCROLL TO DISCOVER <span>↓</span></a><div class="hero-number">01 — 0${Math.max(services.length, 1)}</div></div></section>
+${strip.length ? `<div class="principles">${strip.map((x, i) => `${i ? "<i>✧</i>" : ""}<span>${esc(x)}</span>`).join("")}</div>` : ""}
+${services.length ? `<section id="treatments" class="section treatments"><div class="section-heading rv"><div><p class="eyebrow">01 / WHAT WE DO</p><h2>Small refinements.<br/><em>A different kind of care.</em></h2></div><p>Start with what matters to you.<br/>We’ll help you explore the possibilities.</p></div><div class="treatment-grid">${services.map((s, i) => `<article class="treatment-card treatment-0${i + 1} rv"><span class="card-index">0${i + 1} / ${esc(nicheLabel(b.niche).toUpperCase())}</span>${i === 0 ? `<img class="card-portrait" src="/hero-2.jpg" alt="" loading="lazy"/>` : ""}<div class="card-content"><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p><div class="card-bottom"><span>Ask about this</span><a href="#consult" data-service="${esc(s.title)}" aria-label="Ask about ${esc(s.title)}">${ARROW}</a></div></div></article>`).join("")}</div></section>` : ""}
+<section id="philosophy" class="philosophy section"><div class="philosophy-label rv"><p class="eyebrow">02 / THE ${esc(b.name.toUpperCase())} APPROACH</p><span class="asterisk">✳</span></div><div class="rv"><h2>${about ? `${esc([about.a, about.b].filter(Boolean).join(" "))}<br/><em>${esc(about.em)}</em>` : `You don’t need<br/>to be someone else.<br/><em>Just more yourself.</em>`}</h2>${c.about?.body ? `<p>${esc(c.about.body)}</p>` : ""}<a href="#experience" class="text-link">Discover our approach ${ARROW}</a></div></section>
+<section id="experience" class="experience section"><div class="experience-visual"><img src="/hero-3.jpg" alt="${esc(b.name)}" loading="lazy"/><div class="image-note">${esc(b.name.toUpperCase())}<span>Illustrative image</span></div></div><div class="experience-story"><p class="eyebrow">03 / YOUR EXPERIENCE</p><h2>Less pressure.<br/><em>More possibility.</em></h2>${steps.map((s, i) => `<div class="journey-step rv"><span>0${i + 1}</span><div><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p></div></div>`).join("")}<a class="text-link" href="#consult">Let’s start with you ${ARROW}</a></div></section>
+<section id="consult" class="investment section"><div class="rv"><p class="eyebrow">04 / LET’S TALK</p><h2>Your goals.<br/><em>Your pace.</em></h2><p class="investment-intro">Tell us what you’re interested in.<br/>No pressure — we’ll get back to you with next steps.</p>${areas.length ? `<p class="fine-print">Serving ${esc(areas.slice(0, 5).join(", "))}.</p>` : ""}<p class="fine-print"><a href="${esc(b.phoneHref)}">${esc(b.phone)}</a>${b.hours ? ` · ${esc(b.hours)}` : ""}</p></div><form class="calculator consult-form" id="consult-form"><div class="calc-top"><span>YOUR CONSULTATION REQUEST</span></div><label for="svc">I’d like to explore</label><select id="svc" name="service">${options.map(o => `<option>${esc(o)}</option>`).join("")}<option>Something else</option></select><label for="nm">Your name</label><input id="nm" name="name" required autocomplete="name" placeholder="First and last name"/><label for="ph">Phone</label><input id="ph" name="phone" type="tel" required autocomplete="tel" placeholder="(000) 000-0000"/><label for="ms">Anything you’d like us to know? (optional)</label><textarea id="ms" name="message" placeholder="Keep it brief."></textarea><button class="button" type="submit">Send my request ${ARROW}</button><p class="form-ok" id="form-ok" hidden></p></form></section>
+${realDataCss(RD_THEME)}${galleryBlock(c)}${reviewsBlock(c)}
+${faq.length ? `<section id="faq" class="faq section"><div><p class="eyebrow">A LITTLE MORE CLARITY</p><h2>Good questions.<br/><em>Thoughtful answers.</em></h2></div><div>${faq.map((f, i) => `<div class="faq-item"><button aria-expanded="${i === 0}" aria-controls="faq-${i}">${esc(f.q)}${CHEV}</button><div id="faq-${i}"${i === 0 ? "" : " hidden"}><p>${esc(f.a)}</p></div></div>`).join("")}</div></section>` : ""}
+<section class="closing"><div class="rv"><p class="eyebrow">YOUR NEXT CHAPTER STARTS WITH A CONVERSATION</p><h2>Come as you are.<br/><em>Leave with possibility.</em></h2><a class="button" href="#consult">Get in touch ${ARROW}</a><p>A little curiosity is all you need.</p></div><span class="closing-watermark" aria-hidden="true">${nameLc}</span></section></main>
+${callbarBlock(c, { quoteHref: "#consult" })}
+<footer><div class="footer-top"><div>${brand}<p>${esc(b.tagline)}</p></div><div><h3>EXPLORE</h3><a href="#treatments">Services</a><a href="#philosophy">Our approach</a><a href="#experience">The experience</a></div><div><h3>YOUR VISIT</h3><a href="#consult">Request a consultation</a>${faq.length ? `<a href="#faq">Your questions</a>` : ""}<a href="${esc(b.phoneHref)}">${esc(b.phone)}</a></div><div><h3>ROOTED IN ${esc(b.city.toUpperCase())}</h3><p>${esc(areas.slice(0, 6).join(" · "))}</p><span class="location">${esc(b.address)}</span></div></div><div class="footer-bottom"><span>© ${new Date().getFullYear()} ${esc(b.name)}</span><span>Imagery is illustrative</span><a class="text-link" href="#consult">Let’s talk about you</a></div></footer>`
+}
