@@ -1,87 +1,92 @@
 import type { SiteConfig } from "@core/web/types"
 
-// Placeholder only — pipeline/src/agents/config-generator.ts overwrites this
-// file entirely with real business data at build time. This fallback exists
-// so `npm run dev:generic-business` renders something sane, and so any
-// business type not covered by a niche-specific template (see
-// pipeline/src/agents/builder.ts's NICHE_TEMPLATE_DIR) still gets a real,
-// working site instead of a failed build.
 export const config: SiteConfig = {
   business: {
-    city: "Tracy",
-    theme: "clean",
-    niche: "hvac",
-    name: "Your Business Name",
-    tagline: "Local, Trusted, Reliable.",
-    phone: "(555) 654-0789",
-    phoneHref: "tel:+15556540789",
-    email: "hello@yourbusiness.com",
-    address: "Tracy, California",
-    serviceAreas: ["Tracy", "Mountain House", "Manteca", "Stockton", "Brentwood", "Lathrop"],
-    since: "2015",
-    google_rating: "4.9",
-    review_count: "120",
+    googlePlaceId: "web-aa4d58e3-43ce-42c7-8db9-3fbbf505aa84",
+    name: "Melotto Group",
+    tagline: "Refined spaces. Elevated living.",
+    phone: "(215) 821-8810",
+    phoneHref: "tel:+12158218810",
+    email: "h.melotto@melottogroup.com",
+    address: "Philadelphia, PA",
+    city: "Philadelphia",
+    serviceAreas: ["Philadelphia"],
+    license: "",
+    since: "day one",
+    google_rating: "",
+    review_count: "",
     emergency: false,
-    social: {
-      google: "https://google.com",
-      yelp: "https://yelp.com",
-      instagram: "https://instagram.com",
-      facebook: "https://facebook.com",
-    },
-  },
-
-  about: {
-    heading: "Local Service You Can Actually Trust",
-    body: "We're a locally owned business serving the community with honest work, fair pricing, and a team that shows up when they say they will.",
-    highlights: [
-      { icon: "star",        text: "Locally owned and operated" },
-      { icon: "shield-check", text: "Licensed, insured, background-checked team" },
-      { icon: "clock",       text: "Fast response, clear communication" },
-    ],
+    theme: "clean",
+    niche: "Contractors",
   },
 
   services: [
-    { icon: "check",  image: "/service-1.jpg", title: "Service One",   desc: "A short, clear description of the first thing this business does for its customers.", urgent: false },
-    { icon: "check",  image: "/service-2.jpg", title: "Service Two",   desc: "A short, clear description of the second thing this business does for its customers.", urgent: false },
-    { icon: "check",  image: "/service-3.jpg", title: "Service Three", desc: "A short, clear description of the third thing this business does for its customers.", urgent: false },
-    { icon: "check",  image: "/service-4.jpg", title: "Service Four",  desc: "A short, clear description of the fourth thing this business does for its customers.", urgent: false },
+    { icon: "home", title: "Kitchen Remodeling", desc: "Modernize your culinary space with custom layouts and refined finishes.", urgent: false },
+    { icon: "droplets", title: "Bathroom Renovation", desc: "Upgrade your daily routine with elegant, functional bathroom transformations.", urgent: false },
+    { icon: "hammer", title: "Basement Finishing", desc: "Maximize your square footage by converting lower levels into usable living areas.", urgent: false },
+    { icon: "briefcase", title: "Home Addition Construction", desc: "Expand your footprint with seamlessly integrated structural additions.", urgent: false },
+    { icon: "star", title: "Rooftop Deck Construction", desc: "Create sophisticated outdoor entertaining spaces above the city skyline.", urgent: false },
+    { icon: "shield-check", title: "Historic Rowhouse Renovation", desc: "Update classic architecture while preserving original structural charm.", urgent: false }
   ],
 
   testimonials: [
-    { name: "Jamie R.",  location: "Tracy, CA",         stars: 5, avatar: "https://i.pravatar.cc/80?u=jamie_generic", text: "Great experience from start to finish. Showed up on time and did exactly what they said they would." },
-    { name: "Morgan T.", location: "Mountain House, CA", stars: 5, avatar: "https://i.pravatar.cc/80?u=morgan_generic", text: "Clear pricing, no surprises, and the work held up. Would use them again." },
-    { name: "Sam K.",    location: "Manteca, CA",        stars: 5, avatar: "https://i.pravatar.cc/80?u=sam_generic", text: "Responsive and professional. Exactly what you want from a local business." },
+    { name: "Sarah Jenkins", location: "Philadelphia", stars: 5, text: "The Melotto Group completely transformed our outdated kitchen into a modern, functional space. The attention to detail was incredible, and they kept the workspace spotless throughout the entire project. We finally have the culinary oasis we always dreamed of." },
+    { name: "David Chen", location: "Philadelphia", stars: 5, text: "Renovating our historic Philadelphia rowhouse felt daunting until we hired Melotto Group. They preserved the original charm while updating the layout for our growing family. The communication was clear, and the final result exceeded every single expectation we had." },
+    { name: "Emily Roberts", location: "Philadelphia", stars: 5, text: "Adding a rooftop deck to our home was a major investment, and the team handled it with absolute professionalism. They navigated the city requirements seamlessly and delivered a stunning outdoor living area that has completely changed how we entertain." }
   ],
 
   trustBadges: [
-    "Locally Owned",
     "Licensed & Insured",
-    "Fast Response",
-    "5-Star Rated",
+    "Philadelphia Based",
+    "Clear Communication",
+    "Upfront Estimates"
   ],
 
   stats: [
-    { value: 4.9, label: "Google Rating",  suffix: "★", decimals: 1 },
-    { value: 120, label: "Happy Customers", suffix: "+", decimals: 0 },
-    { value: 10,  label: "Years in Business", suffix: "+", decimals: 0 },
+    { value: 1, label: "Service Area", suffix: "", decimals: 0 },
+    { value: 6, label: "Core Services", suffix: "", decimals: 0 },
+    { value: 1, label: "City Served", suffix: "", decimals: 0 }
   ],
 
   reasons: [
-    { icon: "award",        title: "Locally Owned",   desc: "We live and work in this community — our reputation depends on doing it right." },
-    { icon: "shield-check", title: "Fully Insured",   desc: "Licensed and insured so you're protected at every step." },
-    { icon: "star",         title: "5-Star Service",  desc: "Consistent, reliable work that keeps customers coming back." },
-    { icon: "users",        title: "Our Own Team",    desc: "No subcontractors — the people who show up are the people you hired." },
+    { icon: "hammer", title: "Expert Craftsmanship", desc: "We deliver precise, high-quality construction tailored to your exact specifications." },
+    { icon: "clock", title: "Clear Timelines", desc: "We establish realistic schedules and keep you informed at every project phase." },
+    { icon: "dollar-sign", title: "Transparent Estimates", desc: "We discuss all costs upfront before any construction begins." },
+    { icon: "shield-check", title: "Respectful Teams", desc: "Our crews maintain clean, organized workspaces in your home." },
+    { icon: "briefcase", title: "Project Management", desc: "We handle the logistics, from material sourcing to final walkthroughs." },
+    { icon: "star", title: "Refined Results", desc: "We focus on the finishing touches that elevate your living space." }
+  ],
+
+  about: {
+    heading: "Elevating Philadelphia homes with precision.",
+    body: "Melotto Group provides professional contracting services throughout Philadelphia, specializing in everything from historic rowhouse renovations to modern kitchen remodels. We focus on clear communication and detailed planning to ensure your project aligns with your vision.",
+    highlights: [{ icon: "home", text: "Locally operated in Philadelphia" }]
+  },
+
+  process: [
+    { title: "Discuss your vision", desc: "We review your goals and assess the space." },
+    { title: "Develop the plan", desc: "We outline the scope, materials, and timeline." },
+    { title: "Execute the build", desc: "We manage the construction with careful attention to detail." }
   ],
 
   faq: [
-    { q: "Do you offer free quotes?", a: "Yes — reach out and we'll get you a straight quote, no obligation." },
-    { q: "What areas do you serve?", a: "We serve the local area and surrounding communities — check the service area list above." },
-    { q: "How fast can you respond?", a: "We aim to respond the same day for most requests." },
+    { q: "Do you handle historic rowhouse renovations?", a: "Yes, we specialize in updating historic Philadelphia rowhouses while respecting their original architectural character." },
+    { q: "How do we start the remodeling process?", a: "Contact us to schedule an initial consultation where we will discuss your goals and evaluate your current space." },
+    { q: "Are estimates provided before work begins?", a: "Absolutely. We provide a detailed scope of work and discuss all estimated costs before any construction starts." },
+    { q: "What areas do you serve?", a: "We proudly provide our contracting and renovation services throughout Philadelphia." }
   ],
 
   formServiceOptions: [
-    "General Inquiry",
-    "Request a Quote",
-    "Schedule Service",
-  ],
+    "Kitchen Remodeling",
+    "Bathroom Renovation",
+    "Basement Finishing",
+    "Home Addition Construction",
+    "Rooftop Deck Construction",
+    "Historic Rowhouse Renovation"
+  ]
 }
+
+export const BUSINESS = config.business
+export const SERVICES = config.services!
+export const TESTIMONIALS = config.testimonials!
+export const TRUST_BADGES = config.trustBadges!
